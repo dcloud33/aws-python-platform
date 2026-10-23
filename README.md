@@ -4,7 +4,7 @@ A project to build a repeatable AWS deployment platform for Python APIs using Te
 
 ## Project status
 
-**Planning stage.** The requirements and intended workflow are defined below. Application code, infrastructure, and deployment automation have not yet been implemented.
+Local Flask /health endpoint works; AWS infrastructure and deployment automation are still planned.
 
 ## Business problem
 
@@ -56,11 +56,63 @@ Hosting, authentication, log storage, and CI/CD implementation decisions will be
 - [x] Define the business problem and intended users.
 - [x] Define initial acceptance criteria and deployment workflow.
 - [x] Create the GitHub repository and initial project documentation.
-- [ ] Clone the repository to the development machine.
-- [ ] Build the smallest Python API with a health endpoint.
-- [ ] Run and verify the API locally.
-- [ ] Add local setup and verification instructions.
+- [x] Clone the repository to the development machine.
+- [x] Build the smallest Python API with a health endpoint.
+- [x] Run and verify the API locally.
+- [x] Add local setup and verification instructions.
 
 ## Working approach
 
 Each feature progresses through requirements, design or pseudocode, implementation, verification, and documentation. Commits will record incremental progress. Setup instructions, architecture decisions, troubleshooting notes, and verification evidence will be added as working capabilities are delivered.
+
+## Local development
+
+Tested with Python 3.13.5 on macOS. Run these commands from the repository folder.
+
+### 1. Create and activate a virtual environment
+
+Create the environment once:
+
+```bash
+python3 -m venv .venv
+```
+
+Activate it whenever opening a new terminal for Python development:
+
+```bash
+source .venv/bin/activate
+```
+
+### 2. Install dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 3. Start the local server
+
+```bash
+python -m flask --app app run --port 5001
+```
+
+Leave this terminal running while testing the API.
+
+### 4. Verify the health endpoint
+
+In a separate terminal, run:
+
+```bash
+curl -i http://127.0.0.1:5001/health
+```
+
+Expected results:
+
+- HTTP status: `200 OK`
+- Content type: `application/json`
+- Response body: `{"status":"healthy"}`
+
+This endpoint currently confirms that the application responds. It does not check external dependencies. Authentication and AWS deployment are planned.
+
+### 5. Stop the server
+
+Press **Control + C** in the terminal running Flask.
